@@ -1,0 +1,33 @@
+name: Website release gate
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  release-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+      - uses: sigstore/cosign-installer@v3
+      - run: npm ci
+      - name: Verify signed stable release index
+        run: ./scripts/sync-signed-release-index.sh
+      - name: Audit production dependencies
+        run: npm audit --omit=dev --audit-level=high
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm run privacy:check
+      - run: npm run build
+      - run: npx playwright install --with-deps chromium
+      - name: Mobile accessibility analytics and privacy gate
+        run: npm run test:e2e
