@@ -7,6 +7,7 @@ type Props = { issuerURL: string };
 export function ActivationGuide({ issuerURL }: Props) {
   const [sku, setSKU] = useState('pro');
   const [session, setSession] = useState('');
+	const [checkoutURL, setCheckoutURL] = useState('');
   const [licenseID, setLicenseID] = useState('');
   const [installationID, setInstallationID] = useState('');
   const [tenantID, setTenantID] = useState('');
@@ -19,9 +20,10 @@ export function ActivationGuide({ issuerURL }: Props) {
     setMessage('');
     const response = await fetch(`${issuerURL}/v1/checkout-sessions`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ sku }) });
     if (!response.ok) { setMessage('Checkout request could not be created. Try again later.'); return; }
-    const value = await response.json() as { sessionId: string };
+    const value = await response.json() as { sessionId: string; checkoutUrl?: string };
     setSession(value.sessionId);
-    setMessage('Checkout request created. Complete payment with the provider, then redeem the issued license below.');
+    setCheckoutURL(value.checkoutUrl ?? '');
+    setMessage(value.checkoutUrl ? 'Checkout request created. Continue with the provider, then redeem the issued license below.' : 'Checkout request created. Complete payment with the provider, then redeem the issued license below.');
   };
   const redeem = async () => {
     setMessage(''); setCode('');
@@ -37,7 +39,7 @@ export function ActivationGuide({ issuerURL }: Props) {
     <p className="step-label">Optional · Activation</p><h2 id="activation-title">Activate without cluster credentials</h2>
     <p>Request checkout here. After purchase, copy the installation ID and tenant ID from your signed-in control-plane activation page; neither is a credential.</p>
     <label>SKU<select value={sku} onChange={(event) => setSKU(event.target.value)}><option value="pro">Pro</option><option value="enterprise">Enterprise</option></select></label>
-    <button className="copy-button" type="button" onClick={requestCheckout}>Request checkout</button>{session && <p className="activation-status">Request {session}</p>}
+    <button className="copy-button" type="button" onClick={requestCheckout}>Request checkout</button>{session && <p className="activation-status">Request {session}</p>}{checkoutURL && <p><a className="primary-link" href={checkoutURL}>Continue to secure checkout</a></p>}
     <div className="activation-fields">
       <label>Issued license ID<input value={licenseID} onChange={(event) => setLicenseID(event.target.value)} autoComplete="off" /></label>
       <label>Installation ID<input value={installationID} onChange={(event) => setInstallationID(event.target.value)} autoComplete="off" /></label>
