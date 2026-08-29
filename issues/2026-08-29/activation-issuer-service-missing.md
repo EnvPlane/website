@@ -1,5 +1,11 @@
 # Hosted activation issuer service is missing
 
+Status: superseded on 2026-08-29. The private `activation-issuer` repository
+now owns this service. Its implementation keeps signing keys in a KMS-facing
+adapter and provides purchase idempotency, bound redemption, replacement,
+revocation, audit state, and signed verification metadata. Public website
+code remains intentionally free of issuer credentials and state.
+
 EP-SSO-013 requires issuer-owned private signing keys, purchase idempotency,
 replacement revisions, revocation distribution, and redemption audit state.
 The open-source website, control-plane runtime, and Helm charts must not hold

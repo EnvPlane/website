@@ -1,5 +1,11 @@
 # EP-SSO-013 implementation is absent after ticket closure
 
+Status: superseded on 2026-08-29. The original review did not include the
+private `activation-issuer` repository. The issuer now provides the hosted
+lifecycle; control-plane verifies and persists activation codes locally using
+the published contracts v0.1.66 key-set format. Do not move issuer signing
+material into public repositories to address this historical report.
+
 The activation issuer tracking ticket was closed, but repository review found
 no implementation of the EP-SSO-013 lifecycle.
 
