@@ -1,5 +1,12 @@
 # Activation checkout and redemption handoff is not implemented
 
+Status: resolved on 2026-08-29 by `4107b91`.
+
+The opt-in landing flow is enabled only when
+`NEXT_PUBLIC_ACTIVATION_ISSUER_URL` is configured. It requests checkout,
+redeems only with safe installation/tenant identifiers, and clears the
+activation code from browser state after installation confirmation.
+
 EP-SSO-013 requires the hosted landing path from checkout/request to an
 activation code. The private `activation-issuer` API exists, but website has
 no client or route that calls its checkout endpoint, collects the safe
