@@ -5,5 +5,5 @@ import type { VerifiedRelease } from './release-types';
 export default function InstallPage() {
   const verifiedRelease = releaseData as VerifiedRelease;
   const release = verifiedRelease.verified ? verifiedRelease.index : null;
-  return <InstallGuide release={release} bundleSha256={verifiedRelease.bundleSha256} />;
+  return <InstallGuide release={release} bundleSha256={verifiedRelease.bundleSha256} issuerURL={process.env.NEXT_PUBLIC_ACTIVATION_ISSUER_URL ?? ''} />;
 }

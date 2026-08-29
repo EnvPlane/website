@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import type { ClusterTarget, HostingMode, ReleaseIndex } from './release-types';
+import { ActivationGuide } from './activation-guide';
 
 const prerequisiteCopy: Record<string, { title: string; detail: string }> = {
   kubernetes: { title: 'Kubernetes', detail: 'A provisioned, reachable cluster' },
@@ -16,7 +17,7 @@ function trackSelection(event: 'cluster_target_selected' | 'hosting_mode_selecte
   window.dispatchEvent(new CustomEvent('envplane:analytics', { detail: { event, value } }));
 }
 
-export function InstallGuide({ release, bundleSha256 }: { release: ReleaseIndex | null; bundleSha256: string }) {
+export function InstallGuide({ release, bundleSha256, issuerURL }: { release: ReleaseIndex | null; bundleSha256: string; issuerURL: string }) {
   const shellRef = useRef<HTMLElement>(null);
   const [clusterTarget, setClusterTarget] = useState<ClusterTarget>('current');
   const [hostingMode, setHostingMode] = useState<HostingMode>('cloud');
@@ -147,6 +148,8 @@ export function InstallGuide({ release, bundleSha256 }: { release: ReleaseIndex 
           <p>After the rollout, port-forward the frontend and open <strong>{release?.firstRun.url ?? 'the signed first-run URL'}</strong>. The expected screen is initial authentication—not a login form on this landing page.</p>
         </article>
       </section>
+
+      <ActivationGuide issuerURL={issuerURL} />
 
       <footer>
         <p>No cookies. No third-party analytics. No credential collection.</p>
