@@ -1,0 +1,52 @@
+@import 'tailwindcss';
+
+:root { --ink: #15211d; --muted: #64706a; --paper: #f2f0e9; --line: #d7d9d1; --lime: #d5ff72; --forest: #193f33; }
+* { box-sizing: border-box; }
+html { background: var(--paper); color: var(--ink); }
+body { margin: 0; font-family: var(--font-geist-sans), Arial, sans-serif; }
+a { color: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
+.topbar { align-items: center; display: flex; justify-content: space-between; margin: 0 auto; max-width: 1240px; padding: 30px 34px; }
+.wordmark { font-size: 20px; font-weight: 760; letter-spacing: -0.05em; text-decoration: none; }
+.quiet-link { color: var(--muted); font-size: 14px; text-underline-offset: 4px; }
+.install-shell { min-height: 100vh; padding-bottom: 72px; }
+.install-hero { align-items: end; display: grid; gap: 48px; grid-template-columns: minmax(0, 1.4fr) minmax(280px, .6fr); margin: 78px auto 54px; max-width: 1240px; padding: 0 34px; }
+.eyebrow { color: #456157; font-size: 12px; font-weight: 760; letter-spacing: .13em; margin: 0 0 18px; text-transform: uppercase; }
+.install-hero h1, .home-shell h1 { font-size: clamp(52px, 7vw, 96px); letter-spacing: -.072em; line-height: .9; margin: 0; max-width: 900px; }
+.hero-copy { color: var(--muted); font-size: 19px; line-height: 1.55; margin: 30px 0 0; max-width: 650px; }
+.trust-card { align-items: flex-start; background: var(--forest); border-radius: 4px; color: white; display: flex; gap: 16px; padding: 24px; }
+.trust-card strong { font-size: 15px; }
+.trust-card p { color: #bcd0c8; font-size: 13px; line-height: 1.5; margin: 7px 0 0; }
+.pulse-dot { background: var(--lime); border-radius: 50%; box-shadow: 0 0 0 6px rgb(213 255 114 / 13%); flex: 0 0 auto; height: 9px; margin-top: 5px; width: 9px; }
+.guide-grid { display: grid; gap: 1px; grid-template-columns: .82fr 1.18fr; margin: 0 auto; max-width: 1240px; padding: 0 34px; }
+.path-panel, .command-panel { border: 1px solid var(--line); min-height: 410px; padding: 34px; }
+.command-panel { background: #fbfaf6; }
+.step-label { color: var(--muted); font-size: 11px; font-weight: 760; letter-spacing: .12em; margin: 0 0 30px; text-transform: uppercase; }
+fieldset { border: 0; margin: 0 0 26px; padding: 0; }
+legend { font-size: 14px; font-weight: 670; margin-bottom: 11px; }
+.segment { display: grid; grid-template-columns: 1fr 1fr; }
+.segment button { background: transparent; border: 1px solid #bdc1b8; color: var(--ink); cursor: pointer; font: inherit; min-height: 48px; padding: 10px 12px; }
+.segment button + button { border-left: 0; }
+.segment button.selected { background: var(--ink); color: white; }
+.segment button:focus-visible, .copy-button:focus-visible, a:focus-visible { outline: 3px solid #577a00; outline-offset: 3px; }
+.privacy-note, .command-help { color: var(--muted); font-size: 13px; line-height: 1.55; margin: 26px 0 0; }
+.command-heading { align-items: center; display: flex; gap: 12px; justify-content: space-between; }
+.command-heading h2 { font-size: clamp(24px, 3vw, 38px); letter-spacing: -.04em; margin: 0; }
+.verified-badge { border: 1px solid #9aad52; border-radius: 100px; color: #52631a; font-size: 11px; padding: 6px 9px; white-space: nowrap; }
+pre { background: #14231d; border-radius: 3px; color: #e5f4ec; font: 13px/1.7 var(--font-geist-mono), monospace; margin: 28px 0 16px; min-height: 130px; overflow-x: auto; padding: 22px; white-space: pre-wrap; word-break: break-word; }
+.copy-button, .primary-link { background: var(--lime); border: 1px solid #9dbb52; color: #20300f; cursor: pointer; display: inline-flex; font-weight: 720; justify-content: center; padding: 14px 20px; text-decoration: none; }
+.copy-button:disabled { cursor: not-allowed; filter: grayscale(1); opacity: .55; }
+.home-shell { margin: 0 auto; max-width: 1000px; padding: 18vh 32px; }
+.home-shell p:not(.eyebrow) { color: var(--muted); font-size: 20px; line-height: 1.5; max-width: 650px; }
+.primary-link { margin-top: 20px; }
+@media (max-width: 760px) {
+  .topbar { padding: 22px 20px; }
+  .install-hero { gap: 30px; grid-template-columns: 1fr; margin: 48px auto 34px; padding: 0 20px; }
+  .install-hero h1 { font-size: clamp(46px, 15vw, 66px); }
+  .hero-copy { font-size: 17px; }
+  .guide-grid { grid-template-columns: 1fr; padding: 0 20px; }
+  .path-panel, .command-panel { min-height: auto; padding: 26px 20px; }
+  .command-heading { align-items: flex-start; flex-direction: column; }
+  .copy-button { min-height: 48px; width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; } }
