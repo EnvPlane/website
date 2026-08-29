@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { ClusterTarget, HostingMode, ReleaseIndex } from './release-types';
 
 const prerequisiteCopy: Record<string, { title: string; detail: string }> = {
@@ -17,9 +17,14 @@ function trackSelection(event: 'cluster_target_selected' | 'hosting_mode_selecte
 }
 
 export function InstallGuide({ release, bundleSha256 }: { release: ReleaseIndex | null; bundleSha256: string }) {
+  const shellRef = useRef<HTMLElement>(null);
   const [clusterTarget, setClusterTarget] = useState<ClusterTarget>('current');
   const [hostingMode, setHostingMode] = useState<HostingMode>('cloud');
   const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    shellRef.current?.setAttribute('data-hydrated', 'true');
+  }, []);
 
   const selectClusterTarget = (value: ClusterTarget) => {
     setClusterTarget(value);
@@ -31,14 +36,26 @@ export function InstallGuide({ release, bundleSha256 }: { release: ReleaseIndex 
   };
   const copyCommand = async () => {
     if (!release) return;
-    await navigator.clipboard.writeText(release.install.command);
+    try {
+      await navigator.clipboard.writeText(release.install.command);
+    } catch {
+      const fallback = document.createElement('textarea');
+      fallback.value = release.install.command;
+      fallback.setAttribute('readonly', '');
+      fallback.style.position = 'fixed';
+      fallback.style.opacity = '0';
+      document.body.appendChild(fallback);
+      fallback.select();
+      document.execCommand('copy');
+      fallback.remove();
+    }
     setCopied(true);
     trackSelection('install_command_copied', release.version);
     window.setTimeout(() => setCopied(false), 1800);
   };
 
   return (
-    <main className="install-shell">
+    <main ref={shellRef} className="install-shell" data-hydrated="false">
       <nav className="topbar" aria-label="Primary navigation">
         <Link className="wordmark" href="/">envplane</Link>
         <a className="quiet-link" href="https://github.com/EnvPlane/deploy/tree/main/docs">Documentation</a>

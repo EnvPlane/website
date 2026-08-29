@@ -13,6 +13,7 @@ test('guided install is accessible and credential-free', async ({ page }) => {
 test('mobile path controls remain usable without horizontal overflow', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/install');
+  await expect(page.locator('main[data-hydrated="true"]')).toBeVisible();
   await page.getByRole('button', { name: 'Remote cluster' }).click();
   await page.getByRole('button', { name: 'On-prem' }).click();
   await expect(page.getByText(/Install management first/i)).toBeVisible();
@@ -27,6 +28,7 @@ test('copy and selection analytics never send network requests', async ({ page }
     if (!['document', 'stylesheet', 'script', 'font'].includes(request.resourceType())) requests.push(request.url());
   });
   await page.goto('/install');
+  await expect(page.locator('main[data-hydrated="true"]')).toBeVisible();
   await page.getByRole('button', { name: 'Remote cluster' }).click();
   await page.getByRole('button', { name: 'Copy Helm command' }).click();
   await expect(page.getByRole('button', { name: 'Copied' })).toBeVisible();
