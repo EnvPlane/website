@@ -9,6 +9,10 @@ export default defineConfig({
     url: 'http://localhost:3100/install',
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
+    env: {
+      ...process.env,
+      NEXT_PUBLIC_ACTIVATION_ISSUER_URL: 'https://activation-issuer.test',
+    },
   },
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
 });

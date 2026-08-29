@@ -16,3 +16,12 @@ use, and avoid persisting it in DOM, storage, logs, or telemetry.
 - Assert the activation code field is cleared after a successful handoff and
   no code appears in rendered DOM or browser storage.
 - Run this test in the website release gate.
+
+## Resolution
+
+Resolved by the Playwright issuer-mock regression in
+`tests/activation-handoff.spec.ts`. The test validates exact checkout and
+redemption request bodies, confirms that the one-time code is cleared from
+the DOM and browser storage, and disables browser media artifacts for the
+code-bearing interaction. The existing mandatory `npm run test:e2e` website
+release-gate step executes it.
