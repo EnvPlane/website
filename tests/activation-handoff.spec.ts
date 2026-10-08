@@ -24,7 +24,7 @@ test('activation checkout and redemption handoff stays browser-private', async (
   await expect(page.locator('main[data-hydrated="true"]')).toBeVisible();
   await page.getByRole('button', { name: 'Request checkout' }).click();
   await expect(page.getByRole('link', { name: 'Continue to secure checkout' })).toHaveAttribute('href', 'https://checkout.example.test/session');
-  expect(checkoutBodies).toEqual([{ sku: 'pro' }]);
+  expect(checkoutBodies).toEqual([{ sku: 'team' }]);
 
   await page.getByLabel('Issued license ID').fill('license-browser-test');
   await page.getByLabel('Installation ID').fill('installation-browser-test');
