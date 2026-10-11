@@ -4,6 +4,7 @@ import catalog from '../subscription-offers.json';
 export default function Pricing() {
   return <main className="home-shell">
     <h1>Subscription plans</h1>
+    <p>Team and Business prices include VAT. Your invoice shows the applicable tax breakdown.</p>
     <p>Software subscription prices in EUR per month. Infrastructure and AI provider usage are paid separately.</p>
     {catalog.plans.filter(plan=>plan.id!== 'free').map(plan=><section key={plan.id} aria-label={plan.offer.name}>
       <h2>{plan.offer.name} — {plan.offer.contactSales ? 'from ' : ''}€{plan.offer.monthlyMinorUnits/100}/month</h2>

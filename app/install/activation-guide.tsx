@@ -39,7 +39,7 @@ export function ActivationGuide({ issuerURL }: Props) {
   return <section className="activation-card" aria-labelledby="activation-title">
     <p className="step-label">Optional · Activation</p><h2 id="activation-title">Activate without cluster credentials</h2>
     <p>Request checkout here. After purchase, copy the installation ID and tenant ID from your signed-in control-plane activation page; neither is a credential.</p>
-    <label>SKU<select value={sku} onChange={(event) => setSKU(event.target.value)}>{catalog.plans.filter(plan => plan.offer.monthlyMinorUnits > 0 && !plan.offer.contactSales).map(plan => <option key={plan.id} value={plan.id}>{plan.offer.name} — €{plan.offer.monthlyMinorUnits / 100}/month</option>)}</select></label>
+    <label>SKU<select value={sku} onChange={(event) => setSKU(event.target.value)}>{catalog.plans.filter(plan => plan.offer.monthlyMinorUnits > 0 && !plan.offer.contactSales).map(plan => <option key={plan.id} value={plan.id}>{plan.offer.name} — €{plan.offer.monthlyMinorUnits / 100}/month (VAT included)</option>)}</select></label>
     <p>Infrastructure and AI provider charges are separate. Enterprise starts at €900/month by negotiated quote; SLA requires a separate agreement.</p>
     <button className="copy-button" type="button" onClick={requestCheckout}>Request checkout</button>{session && <p className="activation-status">Request {session}</p>}{checkoutURL && <p><a className="primary-link" href={checkoutURL}>Continue to secure checkout</a></p>}
     <div className="activation-fields">
