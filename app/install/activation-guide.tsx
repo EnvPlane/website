@@ -6,9 +6,6 @@ import catalog from '../subscription-offers.json';
 type Props = { issuerURL: string };
 
 export function ActivationGuide({ issuerURL }: Props) {
-  const [sku, setSKU] = useState('team');
-  const [session, setSession] = useState('');
-	const [checkoutURL, setCheckoutURL] = useState('');
   const [licenseID, setLicenseID] = useState('');
   const [installationID, setInstallationID] = useState('');
   const [tenantID, setTenantID] = useState('');
@@ -17,15 +14,6 @@ export function ActivationGuide({ issuerURL }: Props) {
   const [message, setMessage] = useState('');
 
   if (!issuerURL) return null;
-  const requestCheckout = async () => {
-    setMessage('');
-    const response = await fetch(`${issuerURL}/v1/checkout-sessions`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ sku }) });
-    if (!response.ok) { setMessage('Checkout request could not be created. Try again later.'); return; }
-    const value = await response.json() as { sessionId: string; checkoutUrl?: string };
-    setSession(value.sessionId);
-    setCheckoutURL(value.checkoutUrl ?? '');
-    setMessage(value.checkoutUrl ? 'Checkout request created. Continue with the provider, then redeem the issued license below.' : 'Checkout request created. Complete payment with the provider, then redeem the issued license below.');
-  };
   const redeem = async () => {
     setMessage(''); setCode('');
     const response = await fetch(`${issuerURL}/v1/licenses/${encodeURIComponent(licenseID)}/redeem`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ nonce, installationId: installationID, tenantId: tenantID }) });
@@ -38,10 +26,9 @@ export function ActivationGuide({ issuerURL }: Props) {
 
   return <section className="activation-card" aria-labelledby="activation-title">
     <p className="step-label">Optional · Activation</p><h2 id="activation-title">Activate without cluster credentials</h2>
-    <p>Request checkout here. After purchase, copy the installation ID and tenant ID from your signed-in control-plane activation page; neither is a credential.</p>
-    <label>SKU<select value={sku} onChange={(event) => setSKU(event.target.value)}>{catalog.plans.filter(plan => plan.offer.monthlyMinorUnits > 0 && !plan.offer.contactSales).map(plan => <option key={plan.id} value={plan.id}>{plan.offer.name} — €{plan.offer.monthlyMinorUnits / 100}/month (VAT included)</option>)}</select></label>
-    <p>Infrastructure and AI provider charges are separate. Enterprise starts at €900/month by negotiated quote; SLA requires a separate agreement.</p>
-    <button className="copy-button" type="button" onClick={requestCheckout}>Request checkout</button>{session && <p className="activation-status">Request {session}</p>}{checkoutURL && <p><a className="primary-link" href={checkoutURL}>Continue to secure checkout</a></p>}
+    <p>Create checkout through Billing in your signed-in installation connected to the seller service. This public page does not authorize purchases. After verified purchase, copy the installation ID and tenant ID from your activation page; neither is a credential.</p>
+    <p>{catalog.plans.filter(plan => plan.offer.monthlyMinorUnits > 0 && !plan.offer.contactSales).map(plan => `${plan.offer.name} €${plan.offer.monthlyMinorUnits/100}/month (VAT included)`).join(' · ')}. Card details are entered only on the hosted provider page.</p>
+    <p>Returning to a success URL does not issue a license. Enterprise requires a negotiated quote; no automatic checkout is offered.</p>
     <div className="activation-fields">
       <label>Issued license ID<input value={licenseID} onChange={(event) => setLicenseID(event.target.value)} autoComplete="off" /></label>
       <label>Installation ID<input value={installationID} onChange={(event) => setInstallationID(event.target.value)} autoComplete="off" /></label>

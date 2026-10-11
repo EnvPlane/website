@@ -12,7 +12,7 @@ test('activation checkout and redemption handoff stays browser-private', async (
     checkoutBodies.push(route.request().postDataJSON());
     await route.fulfill({
       contentType: 'application/json',
-      body: JSON.stringify({ sessionId: 'checkout-session-browser-test', checkoutUrl: 'https://checkout.example.test/session' }),
+      body: JSON.stringify({ sessionId: 'checkout-session-browser-test', checkoutUrl: 'https://checkout.stripe.com/c/pay/test' }),
     });
   });
   await page.route('**/v1/licenses/license-browser-test/redeem', async route => {
@@ -22,9 +22,9 @@ test('activation checkout and redemption handoff stays browser-private', async (
 
   await page.goto('/install');
   await expect(page.locator('main[data-hydrated="true"]')).toBeVisible();
-  await page.getByRole('button', { name: 'Request checkout' }).click();
-  await expect(page.getByRole('link', { name: 'Continue to secure checkout' })).toHaveAttribute('href', 'https://checkout.example.test/session');
-  expect(checkoutBodies).toEqual([{ sku: 'team' }]);
+  await expect(page.getByRole('button', { name: 'Request checkout' })).toHaveCount(0);
+  await expect(page.getByText(/Create checkout through Billing in your signed-in installation/)).toBeVisible();
+  expect(checkoutBodies).toEqual([]);
 
   await page.getByLabel('Issued license ID').fill('license-browser-test');
   await page.getByLabel('Installation ID').fill('installation-browser-test');
