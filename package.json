@@ -11,6 +11,7 @@
     "start": "vinext start",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next",
     "typecheck": "tsc --noEmit",
+    "pricing:check": "node scripts/check-pricing-artifact.mjs",
     "privacy:check": "node scripts/check-privacy-contract.mjs",
     "test:e2e": "playwright test"
   },
