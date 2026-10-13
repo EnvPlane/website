@@ -147,7 +147,7 @@ export function InstallGuide({ release, bundleSha256, issuerURL }: { release: Re
             <div><strong>For public access</strong><p>Bring an Ingress or Gateway controller, reachable entry point, DNS and TLS. Add Gateway API resources when using Gateway routes.</p></div>
             <div><strong>For production</strong><p>Plan durable storage, backup and restore, capacity, availability and a policy-capable CNI when NetworkPolicies are required.</p></div>
           </div>
-          <p className="cluster-note">FluxCD and metrics-server are optional for the default Helm install; enable them only for workflows that need GitOps or resource metrics. The default chart does not create a cluster or install these controllers.</p>
+          <p className="cluster-note">Helm Direct needs no GitOps controller. FluxCD and Argo CD are optional workload backends that must be configured separately when selected; metrics-server is needed only for resource metrics. The default chart does not create a cluster or install these controllers.</p>
           {clusterTarget === 'remote' && <p className="cluster-note">A remote target is connected after management setup. It needs scoped Kubernetes access and Pod-to-management HTTPS connectivity; see the <a href="https://github.com/EnvPlane/deploy/blob/main/docs/remote-clusters.md">remote-cluster guide</a>.</p>}
         </article>
         <article className="first-run-card">
