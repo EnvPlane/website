@@ -3,11 +3,11 @@
   "index": {
     "schemaVersion": 1,
     "channel": "stable",
-    "version": "0.4.138",
-    "sourceRevision": "f61abe425c44e41abbbf3da3650ee5bd861b9d8f",
+    "version": "0.4.731",
+    "sourceRevision": "4bd953a8cc3af05b3dc93bcaf72762f80d1f8daa",
     "chart": {
       "repository": "oci://ghcr.io/envplane/envplane",
-      "digest": "sha256:d1ed829b512c890a92d9a14a3940b138251346242b3d7463d3cba2886bc91d1d"
+      "digest": "sha256:92c7b029e7a85ec03d26dcd50618ec15301039cf8351357a9cb05e30f16b68f5"
     },
     "support": {
       "kubernetes": {
@@ -28,7 +28,7 @@
     "install": {
       "release": "envplane",
       "namespace": "envplane",
-      "command": "helm upgrade --install envplane oci://ghcr.io/envplane/envplane --version 0.4.138 --namespace envplane --create-namespace --wait",
+      "command": "helm upgrade --install envplane oci://ghcr.io/envplane/envplane --version 0.4.731 --namespace envplane --create-namespace --wait",
       "prerequisites": [
         "kubernetes",
         "helm",
@@ -49,5 +49,5 @@
       "screen": "initial-authentication"
     }
   },
-  "bundleSha256": "03df7b8fc55785ee15b0b7ec124b9e40e1a4c199fc16c2e59c6d62ec7bb15a7c"
+  "bundleSha256": "4462d51c64ef0dee5f14ecdef8276a61495f5a5b98cd4f51f2e782bdef6ccb6d"
 }

@@ -6,11 +6,11 @@ import type { ClusterTarget, HostingMode, ReleaseIndex } from './release-types';
 import { ActivationGuide } from './activation-guide';
 
 const prerequisiteCopy: Record<string, { title: string; detail: string }> = {
-  kubernetes: { title: 'Kubernetes', detail: 'A provisioned, reachable cluster' },
-  helm: { title: 'Helm', detail: 'Installed on your workstation' },
-  'default-storage-class': { title: 'Storage', detail: 'A default StorageClass' },
-  'namespace-rbac': { title: 'Access', detail: 'Permission to create one namespace' },
-  'public-oci-egress': { title: 'Network', detail: 'Anonymous pull access to GHCR' },
+  kubernetes: { title: 'Kubernetes', detail: 'An existing management cluster with a reachable API and Ready nodes.' },
+  helm: { title: 'Helm', detail: 'Installed on the operator workstation.' },
+  'default-storage-class': { title: 'Persistent storage', detail: 'A default StorageClass that dynamically provisions PVCs for bundled data services.' },
+  'namespace-rbac': { title: 'Install access', detail: 'Permission to create the namespace, chart resources and required cluster-scoped RBAC.' },
+  'public-oci-egress': { title: 'Registry access', detail: 'Anonymous GHCR chart access from the workstation and image pulls from cluster nodes.' },
 };
 
 function trackSelection(event: 'cluster_target_selected' | 'hosting_mode_selected' | 'install_command_copied', value: string) {
@@ -123,13 +123,14 @@ export function InstallGuide({ release, bundleSha256, issuerURL }: { release: Re
       <section className="details-grid" aria-label="Install requirements and verification">
         <article>
           <p className="step-label">Before you run it</p>
-          <h2>Five quick prerequisites</h2>
+          <h2>Management cluster baseline</h2>
           <ul className="prerequisite-list">
             {(release?.install.prerequisites ?? Object.keys(prerequisiteCopy)).map((key) => {
               const item = prerequisiteCopy[key];
               return item ? <li key={key}><span aria-hidden="true">✓</span><div><strong>{item.title}</strong><p>{item.detail}{key === 'kubernetes' && release ? ` ${release.support.kubernetes.minimum}+` : ''}{key === 'helm' && release ? ` ${release.support.helm.minimum}+` : ''}</p></div></li> : null;
             })}
           </ul>
+          <p className="requirements-link">Check the selected kube context and run the <a href="https://github.com/EnvPlane/deploy/blob/main/docs/cluster-prerequisites.md">full cluster prerequisites and read-only preflight</a> before installing.</p>
         </article>
         <article>
           <p className="step-label">03 · Check status</p>
@@ -137,6 +138,17 @@ export function InstallGuide({ release, bundleSha256, issuerURL }: { release: Re
           <div className="status-stack">
             {(release?.status.commands ?? ['Status commands unlock with the verified release index.']).map((command, index) => <code key={command}><span>{index + 1}</span>{command}</code>)}
           </div>
+        </article>
+        <article className="cluster-card">
+          <p className="step-label">Platform-owned capabilities</p>
+          <h2>What your cluster provides</h2>
+          <div className="cluster-capabilities">
+            <div><strong>For first run</strong><p>Working Pod networking and cluster DNS, plus dynamic persistent storage. A local port-forward can expose the initial UI.</p></div>
+            <div><strong>For public access</strong><p>Bring an Ingress or Gateway controller, reachable entry point, DNS and TLS. Add Gateway API resources when using Gateway routes.</p></div>
+            <div><strong>For production</strong><p>Plan durable storage, backup and restore, capacity, availability and a policy-capable CNI when NetworkPolicies are required.</p></div>
+          </div>
+          <p className="cluster-note">FluxCD and metrics-server are optional for the default Helm install; enable them only for workflows that need GitOps or resource metrics. The default chart does not create a cluster or install these controllers.</p>
+          {clusterTarget === 'remote' && <p className="cluster-note">A remote target is connected after management setup. It needs scoped Kubernetes access and Pod-to-management HTTPS connectivity; see the <a href="https://github.com/EnvPlane/deploy/blob/main/docs/remote-clusters.md">remote-cluster guide</a>.</p>}
         </article>
         <article className="first-run-card">
           <p className="step-label">04 · First run</p>
