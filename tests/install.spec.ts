@@ -3,7 +3,8 @@ import { expect, test } from '@playwright/test';
 
 test('guided install is accessible and credential-free', async ({ page }) => {
   await page.goto('/install');
-  await expect(page.getByRole('heading', { name: /Your cluster/i })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1, name: /Your cluster/i })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Management cluster baseline' })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Copy Helm command' })).toBeEnabled();
   await expect(page.locator('input[type="password"], input[type="file"], form')).toHaveCount(0);
   const results = await new AxeBuilder({ page }).analyze();
