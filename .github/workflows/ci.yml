@@ -22,6 +22,8 @@ jobs:
         with:
           go-version: "1.26.9"
           cache: false
+      - name: Verify published pricing provenance regressions
+        run: npm run pricing:test
       - name: Verify canonical pricing artifact
         run: npm run pricing:check
       - uses: sigstore/cosign-installer@v3
