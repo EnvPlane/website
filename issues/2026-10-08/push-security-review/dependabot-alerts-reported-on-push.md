@@ -7,6 +7,11 @@ dependency vulnerabilities: two critical, three high, two moderate and three low
 No CVE, affected package or exploitability details were provided in that response.
 Do not infer that these alerts were introduced by the pushed pricing commit.
 
+The 2026-10-15 push of `codex/pay-002-hosted-pricing-20261015` reported eight
+default-branch alerts: three high, two moderate and three low. This is a new
+notification count, not an individual alert readback or proof that any alert
+was fixed or introduced by the documentation change.
+
 Source: https://github.com/EnvPlane/website/security/dependabot
 
 ## Codex implementation prompt
