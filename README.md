@@ -1,6 +1,8 @@
 # envplane website
 
 Public, credential-free product landing pages for envplane.
+See [route provenance](docs/route-provenance.md) for the current Sites origin,
+the separate `envplane.dev` information page, and the deployment acceptance gate.
 
 ## Guided install
 
