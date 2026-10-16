@@ -32,3 +32,13 @@ custom-domain publication remains separately authorized external acceptance.
 Commercial decisions use stream 08; actual provider verification uses stream 09
 of the 2026-10-15 payment-dynamodb-stack plan. Native importer local acceptance,
 real-provider archive/recovery/readback and merchant tax policy are separate gates.
+
+## Published contracts refresh - 2026-10-16
+
+`contracts-release.json` now pins `v0.1.122`, source
+`d9d4b9fcc71eef0c888eaad730114541459841df`, and OpenAPI digest
+`c32ee0c8bc1bc9d6ad1b06d1b244760084e59d4a9317d0babce4978a7e8e4988`.
+The canonical catalog was regenerated from that exact published module.
+`npm run pricing:check` and all nine provenance tests pass; the displayed plan
+data did not drift. This is local evidence and does not imply website publication
+or provider configuration.
