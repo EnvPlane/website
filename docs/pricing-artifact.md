@@ -42,3 +42,14 @@ The canonical catalog was regenerated from that exact published module.
 `npm run pricing:check` and all nine provenance tests pass; the displayed plan
 data did not drift. This is local evidence and does not imply website publication
 or provider configuration.
+
+## Published contracts refresh - 2026-10-18
+
+`contracts-release.json` now pins published contracts `v0.1.123`, source
+`327cb5fb219eaed03f7667bc58dac2a280fe3569`, module sum
+`h1:FlxcdjNxoUQGSmgLzSrv4lyhGETjGpmHwDL7N7QYtQA=`, and OpenAPI digest
+`3a74d7a9df6a479744bcac72f1ee97df596011aca830a7e3137ad67c24b219ac`.
+`npm run pricing:check` verified the published module provenance and exact
+catalog output; all nine `npm run pricing:test` cases passed. The generated
+catalog bytes are unchanged. This is local evidence only; hosted release checks
+and website publication remain separate.
